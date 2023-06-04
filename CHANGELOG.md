@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+- Add `texlab.findEnvironments` command to return the list of environments containing a position ([#892](https://github.com/latex-lsp/texlab/issues/892))
+
 ### Changed
 
 - Show inlay hints for labels after the command instead of inside the argument ([#890](https://github.com/latex-lsp/texlab/issues/890))
