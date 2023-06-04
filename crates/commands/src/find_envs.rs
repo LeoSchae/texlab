@@ -14,7 +14,7 @@ pub fn find_environments(document: &Document, offset: TextSize) -> Vec<Environme
     let mut results = Vec::new();
     let root = latex::SyntaxNode::new_root(data.green.clone());
     for environment in root
-        .covering_element(TextRange::empty(offset))
+        .covering_element(TextRange::at(offset, 1))
         .ancestors()
         .filter_map(latex::Environment::cast)
     {
