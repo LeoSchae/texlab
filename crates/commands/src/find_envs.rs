@@ -8,15 +8,18 @@ pub struct EnvironmentMatch {
     pub full_range: TextRange,
 }
 
-pub fn find_environments(document: &Document, offset: TextSize) -> Vec<EnvironmentMatch> {
+pub fn find_environments(document: &Document, position: TextSize) -> Vec<EnvironmentMatch> {
     let DocumentData::Tex(data) = &document.data else { return Vec::new() };
 
     let mut results = Vec::new();
     let root = latex::SyntaxNode::new_root(data.green.clone());
-    for environment in root
-        .covering_element(TextRange::at(offset, TextSize:from(1))))
-        .ancestors()
-        .filter_map(latex::Environment::cast)
+
+    let Some(ancestors) = root
+    .token_at_offset(position)
+    .right_biased().and_then(|token| Some(token.parent_ancestors())) else { return results };
+
+
+    for environment in ancestors.filter_map(latex::Environment::cast)
     {
         let Some(name) = environment
             .begin()
